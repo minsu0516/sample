@@ -1,0 +1,77 @@
+#default
+server:
+    port: 8080
+    tomcat:
+      basedir: ./
+      accesslog:
+        enabled: true
+        pattern: common
+        prefix: access_log
+        suffix: .log
+
+spring:
+  jpa:
+    database: h2
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      naming:
+       physical-strategy : org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  datasource:
+    #driver-class-name: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/spg?characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false
+    #username: root
+    #password: 0p9o8i7u
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:mydb
+    username: sa
+    dbcp2:
+      validation-query: select 1
+      test-on-borrow: true
+      test-while-idle: true
+
+  datasource-secondary:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:mydb2
+    username: sa
+
+  h2:
+    console:
+      enabled: true
+      path: /console
+logging:
+  level:
+    org.springframework.boot: INFO
+    org.hibernate: INFO
+    me.socuri.modules: TRACE
+
+
+---
+
+#dev
+server:
+    port: 8080
+    tomcat:
+      basedir: ./
+      accesslog:
+        enabled: true
+        pattern: common
+        prefix: access_log
+        suffix: .log
+
+spring:
+    profiles: dev
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/spg2?characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false
+      username: root
+      password: 0p9o8i7u
+
+
+
+    jpa:
+      database: mysql
+      show-sql: true
+      hibernate:
+        ddl-auto: none
